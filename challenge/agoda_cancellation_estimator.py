@@ -2,7 +2,6 @@ from __future__ import annotations
 from typing import NoReturn
 from IMLearn.base import BaseEstimator
 import numpy as np
-from sklearn.linear_model import LinearRegression
 
 
 class AgodaCancellationEstimator(BaseEstimator):
@@ -23,10 +22,8 @@ class AgodaCancellationEstimator(BaseEstimator):
 
         """
         super().__init__()
-        self.estimator = None
 
-
-    def _fit(self, X: np.ndarray, y: np.ndarray):
+    def _fit(self, X: np.ndarray, y: np.ndarray) -> NoReturn:
         """
         Fit an estimator for given samples
 
@@ -42,12 +39,7 @@ class AgodaCancellationEstimator(BaseEstimator):
         -----
 
         """
-        if not self.fitted_:
-            self.estimator = LinearRegression().fit(X, y)
-            self.fitted_ = True
-        return self.estimator
-
-
+        pass
 
     def _predict(self, X: np.ndarray) -> np.ndarray:
         """
