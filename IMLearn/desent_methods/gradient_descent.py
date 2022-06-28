@@ -120,16 +120,8 @@ class GradientDescent:
 
         """
         # raise NotImplementedError()
-        if f.weights is None:
-            w_0 = np.random.normal(size=X.shape[1])
-        else:
-            w_0 = f.weights
+        w_0 = f.weights
         w = [w_0]
-        # eta = self.learning_rate_.lr_step(t=0)
-        # grad = f.compute_jacobian(X=X, y=y)
-        # w_1 = w_0 - eta * grad
-        # norm = np.linalg.norm(w[t] - w[t-1], ord=2)
-        # self.callback_(solver=self, weights=w_1, val=f.compute_output(X=X, y=y), grad=grad, t=0, eta=eta, delta=norm)
         for t in range(self.max_iter_):
             eta = self.learning_rate_.lr_step(t=t)
             f.weights = w[t]
@@ -137,8 +129,8 @@ class GradientDescent:
             w_t = w[t] - eta * grad
             w.append(w_t)
             norm = np.linalg.norm(w[-1] - w[-2])
-            val = f.compute_output()
-            self.callback_(self, weights=w_t, val=val, grad=grad, t=t, eta=eta, delta=norm, norm=norm)
+            val = f.compute_output(X=X, y=y)
+            self.callback_(model=self, weights=w_t, val=val, grad=grad, t=t, eta=eta, delta=norm, norm=norm)
             if norm <= self.tol_:
                 break
         return self.return_by_out_string(self.out_type_, w, X, y, f)
@@ -152,7 +144,6 @@ class GradientDescent:
                 f.weights(w_t)
                 vals.append(float(f.compute_output(X=X, y=y)))
             return w[np.argmin[vals]]
-            # return w[np.argmin([f.compute_output for w_t in w])]
         else:
             return np.mean(w, axis=1)
 
